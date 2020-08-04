@@ -1173,7 +1173,7 @@
   #define FIL_RUNOUT_PULLUP            // Use internal pullup for filament runout pins.
   //#define FIL_RUNOUT_PULLDOWN        // Use internal pulldown for filament runout pins.
   #define FIL_RUNOUT_PIN       PC12    // "PT-DET"
-  #define FILAMENT_RUNOUT_SENSOR_DEBUG // Enable debugging
+  //#define FILAMENT_RUNOUT_SENSOR_DEBUG // Enable debugging
 
   // Set one or more commands to execute on filament runout.
   // (After 'M412 H' Marlin will ask the host to handle the process.)
