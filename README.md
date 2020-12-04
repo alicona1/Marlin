@@ -1,3 +1,20 @@
+# My Customisation
+## Printer Hardware
+ - Ender 3 Pro
+ - BTT SKR Mini E3 v1.2
+ - BTT TFT35 V3
+ - Creality BL-Touch v3.1
+ - NeoPixel LEDs x 7
+ - Raspberry Pi4 + OctoPrint + Night-light Pi-Cam
+## Software for builds
+ - Visual Studio Code + PlatformIO + Auto Marlin Builder
+ - Github Desktop for Windows
+## Marlin Configurations (work in progress)
+ - `platformio.ini`
+   - default environment: `STM32F103RC_btt_512K`
+   - additional libdeps: `${common_stm32f1.lib_deps}, Adafruit NeoPixel=https://github.com/Taomyn/Adafruit_NeoPixel`
+ - `configuration.h`
+ - `configuration_adv.h`
 # Marlin 3D Printer Firmware
 
 ![GitHub](https://img.shields.io/github/license/marlinfirmware/marlin.svg)
