@@ -14,7 +14,7 @@
    - default environment: `STM32F103RC_btt_512K`
    - additional libdeps: `${common_stm32f1.lib_deps}, Adafruit NeoPixel=https://github.com/Taomyn/Adafruit_NeoPixel`
  - `Marlin/Version.h`
-   - Get rid of "bugfix" from build version: '"v2.0.x"`
+   - Get rid of "bugfix" from build version: `"v2.0.x"`
    - Set build date to date/time firmware was compiled: `__DATE__ " " __TIME__`
  - `Marlin/_Bootscreen.h`
    - Copied from Ender 3 Pro configuration archive
@@ -23,6 +23,9 @@
  - `Marlin/src/HAL/STM32F1/inc/SanityCheck.h`
    - Commented out error `NEOPIXEL_LED (Adafruit NeoPixel) is not supported for HAL/STM32F1.`
  - `Marlin/Configuration.h`
+   - Set author to `"(taomyn)"`
+   - Use `Version.h`
+   - Show custom boot screen
  - `Marlin/Configuration_adv.h`
 # Marlin 3D Printer Firmware
 
