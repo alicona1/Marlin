@@ -17,8 +17,11 @@
    - `#define SHORT_BUILD_VERSION "v2.0.x"`
    - `#define STRING_DISTRIBUTION_DATE __DATE__ " " __TIME__`
  - `_Bootscreen.h`
+   - Copied from Ender 3 Pro configuration archive
  - `_Statusscreen.h`
+   - Copied from Ender 3 Pro configuration archive
  - `SanityCheck.h`
+   - 
  - `Configuration.h`
  - `Configuration_adv.h`
 # Marlin 3D Printer Firmware
