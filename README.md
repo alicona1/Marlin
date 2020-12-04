@@ -10,9 +10,11 @@
  - Visual Studio Code + PlatformIO + Auto Marlin Builder
  - Github Desktop for Windows
 ## Marlin Configurations (work in progress)
- - platformio.ini
- - configuration.h
- - configuration_adv.h
+ - `platformio.ini`
+   - default environment: `STM32F103RC_btt_512K`
+   - additional libdeps: `${common_stm32f1.lib_deps}, Adafruit NeoPixel=https://github.com/Taomyn/Adafruit_NeoPixel`
+ - `configuration.h`
+ - `configuration_adv.h`
 # Marlin 3D Printer Firmware
 
 ![GitHub](https://img.shields.io/github/license/marlinfirmware/marlin.svg)
