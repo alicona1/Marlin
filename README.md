@@ -13,8 +13,14 @@
  - `platformio.ini`
    - default environment: `STM32F103RC_btt_512K`
    - additional libdeps: `${common_stm32f1.lib_deps}, Adafruit NeoPixel=https://github.com/Taomyn/Adafruit_NeoPixel`
- - `configuration.h`
- - `configuration_adv.h`
+ - `Version.h`
+   - `#define SHORT_BUILD_VERSION "v2.0.x"`
+   - `#define STRING_DISTRIBUTION_DATE __DATE__ " " __TIME__`
+ - `_Bootscreen.h`
+ - `_Statusscreen.h`
+ - `SanityCheck.h`
+ - `Configuration.h`
+ - `Configuration_adv.h`
 # Marlin 3D Printer Firmware
 
 ![GitHub](https://img.shields.io/github/license/marlinfirmware/marlin.svg)
