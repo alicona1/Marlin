@@ -4,7 +4,7 @@
  - BTT SKR Mini E3 v1.2
  - BTT TFT35 V3
  - Creality BL-Touch v3.1
- - NeoPixel LEDs x 7
+ - NeoPixel LEDs x 7  - devs at Marlin think this doesn't work, yeah right
  - Raspberry Pi4 + OctoPrint + Night-light Pi-Cam
 ## Software for builds
  - Visual Studio Code + PlatformIO + Auto Marlin Builder
@@ -13,17 +13,17 @@
  - `platformio.ini`
    - default environment: `STM32F103RC_btt_512K`
    - additional libdeps: `${common_stm32f1.lib_deps}, Adafruit NeoPixel=https://github.com/Taomyn/Adafruit_NeoPixel`
- - `Version.h`
-   - `#define SHORT_BUILD_VERSION "v2.0.x"`
-   - `#define STRING_DISTRIBUTION_DATE __DATE__ " " __TIME__`
- - `_Bootscreen.h`
+ - `Marlin/Version.h`
+   - Get rid of "bugfix" from build version: '"v2.0.x"`
+   - Set build date to date/time firmware was compiled: `__DATE__ " " __TIME__`
+ - `Marlin/_Bootscreen.h`
    - Copied from Ender 3 Pro configuration archive
- - `_Statusscreen.h`
+ - `Marlin/_Statusscreen.h`
    - Copied from Ender 3 Pro configuration archive
- - `SanityCheck.h`
-   - 
- - `Configuration.h`
- - `Configuration_adv.h`
+ - `Marlin/src/HAL/STM32F1/inc/SanityCheck.h`
+   - Commented out error `NEOPIXEL_LED (Adafruit NeoPixel) is not supported for HAL/STM32F1.`
+ - `Marlin/Configuration.h`
+ - `Marlin/Configuration_adv.h`
 # Marlin 3D Printer Firmware
 
 ![GitHub](https://img.shields.io/github/license/marlinfirmware/marlin.svg)
