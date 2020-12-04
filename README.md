@@ -73,7 +73,7 @@
    - Enable `LCD_BED_LEVELING`
    - Enable `MESH_EDIT_MENU`
    - Enable `LEVEL_BED_CORNERS`
-   - Set `LEVEL_CORNERS_HEIGHT 0.1` - need to find out why this was recommended
+   - Set `LEVEL_CORNERS_HEIGHT 0.1` - ***need to find out why this was recommended***
    - Enable `LEVEL_CENTER_TOO`
    - Enable `Z_SAFE_HOMING`
    - Set `HOMING_FEEDRATE_Z (10*60)`
@@ -94,6 +94,83 @@
    - Set `NEOPIXEL_BRIGHTNESS 255`
    - Enable `NEOPIXEL_STARTUP_TEST`
  - `Marlin/Configuration_adv.h`
+   - Set `WATCH_TEMP_PERIOD 40`
+   - Set `WATCH_BED_TEMP_PERIOD 90`
+   - Enable `HOTEND_IDLE_TIMEOUT`
+   - Set `HOTEND_IDLE_TIMEOUT_SEC (10*60)`
+   - Enable `CASE_LIGHT_ENABLE`
+   - Set `CASE_LIGHT_PIN 0`
+   - Set `CASE_LIGHT_DEFAULT_BRIGHTNESS 255`
+   - Enable `CASE_LIGHT_MENU`
+   - Enable `CASE_LIGHT_USE_NEOPIXEL` - use the same LED strip as the main ones
+   - Enable `QUICK_HOME`
+   - Set `SLOWDOWN_DIVISOR 8` - ***need to find out why this was recommended***
+   - Enable `XY_FREQUENCY_LIMIT`
+   - Enable `ADAPTIVE_STEP_SMOOTHING`
+   - Enable 'BEEP_ON_FEEDRATE_CHANGE'
+   - Enable `LCD_INFO_MENU`
+   - Enable `TURBO_BACK_MENU_ITEM`
+   - Enable `SOUND_MENU_ITEM`
+   - Set `LED_USER_PRESET_GREEN 255` and `LED_USER_PRESET_BLUE 255` - correct for my LEDs
+   - Enable `LED_USER_PRESET_STARTUP`
+   - Enable `STATUS_MESSAGE_SCROLLING`
+   - Enable `LCD_DECIMAL_SMALL_XY`
+   - Set `LCD_TIMEOUT_TO_STATUS 30000` - stops it dimming too quickly
+   - Enable `LCD_SET_PROGRESS_MANUALLY`
+   - Enable `SHOW_REMAINING_TIME`
+   - Enable `USE_M73_REMAINING_TIME`
+   - Enable `ROTATE_PROGRESS_DISPLAY`
+   - Enable `PRINT_PROGRESS_SHOW_DECIMALS`
+   - Enable `LCD_PROGRESS_BAR`
+   - Enable `LCD_PROGRESS_BAR_TEST`
+   - Enable `POWER_LOSS_RECOVERY`
+   - Set `PLR_ENABLED_DEFAULT true`
+   - Enable `SDCARD_SORT_ALPHA`
+   - Set `SDSORT_LIMIT 255`
+   - Set `SDSORT_GCODE true`
+   - Set `SDSORT_USES_RAM true`
+   - Set `SDSORT_CACHE_NAMES true`
+   - Enable `LONG_FILENAME_HOST_SUPPORT`
+   - Enable `SCROLL_LONG_FILENAMES`
+   - Enable `SD_ABORT_ON_ENDSTOP_HIT`
+   - Enable `AUTO_REPORT_SD_STATUS`
+   - Enable `BINARY_FILE_TRANSFER` - could be useful for flashing via USB/OctoPrint
+   - Set `SDCARD_CONNECTION ONBOARD` - correct for BTT SKR Mini E3 v1.2
+   - Enable `XYZ_NO_FRAME`
+   - Disable `XYZ_HOLLOW_FRAME`
+   - Enable `STATUS_ALT_BED_BITMAP` and `STATUS_ALT_FAN_BITMAP` - I think they look better
+   - Set `STATUS_FAN_FRAMES 4`
+   - Enable `BOOT_MARLIN_LOGO_ANIMATED`
+   - Enable `BABYSTEPPING`
+   - Set `BABYSTEP_MULTIPLICATOR_Z  4`
+   - Enable `DOUBLECLICK_FOR_Z_BABYSTEPPING`
+   - Enable `BABYSTEP_ZPROBE_OFFSET`
+   - Enable `BABYSTEP_ZPROBE_GFX_OVERLAY` - reminds you which way to turn for adjustment
+   - Enable `PROBING_MARGIN_LEFT`, `PROBING_MARGIN_RIGHT`, `PROBING_MARGIN_FRONT`, `PROBING_MARGIN_BACK` - to avoid clips holding bed
+   - Set `PROBING_MARGIN_FRONT 40` - to avoid clips holding bed
+   - Set `BLOCK_BUFFER_SIZE 32`, `BUFSIZE 32` and `TX_BUFFER_SIZE 32` - better USB comms performance
+   - Enable `EMERGENCY_PARSER`
+   - Enable `ADVANCED_OK`
+   - Enable `ADVANCED_PAUSE_FEATURE`
+   - Set `FILAMENT_CHANGE_UNLOAD_FEEDRATE 100`
+   - Set `FILAMENT_CHANGE_UNLOAD_LENGTH 600`
+   - Set `FILAMENT_CHANGE_SLOW_LOAD_FEEDRATE 10`
+   - Set `FILAMENT_CHANGE_SLOW_LOAD_LENGTH 25`
+   - Set `FILAMENT_CHANGE_FAST_LOAD_FEEDRATE 10`
+   - Set `FILAMENT_CHANGE_FAST_LOAD_LENGTH 300`
+   - Set `ADVANCED_PAUSE_CONTINUOUS_PURGE`
+   - Enable `PARK_HEAD_ON_PAUSE`
+   - Enable `FILAMENT_LOAD_UNLOAD_GCODES`
+   - Set `X_CURRENT 580`, `Y_CURRENT 580`, `Z_CURRENT 580` and `E0_CURRENT 650` - correct for Ender 3 Pro
+   - Set `CHOPPER_TIMING CHOPPER_DEFAULT_24V`- correct for Ender 3 Pro with 24v PSU
+   - Enable `MONITOR_DRIVER_STATUS`
+   - Enable `SQUARE_WAVE_STEPPING`
+   - Enable `TMC_DEBUG`
+   - Enable `M115_GEOMETRY_REPORT`
+   - Enable `M114_DETAIL`
+   - Enable `REPORT_FAN_CHANGE`
+   - Enable `GCODE_CASE_INSENSITIVE` - personal hate of mine
+   - Enable `CANCEL_OBJECTS`
 # Marlin 3D Printer Firmware
 
 ![GitHub](https://img.shields.io/github/license/marlinfirmware/marlin.svg)
