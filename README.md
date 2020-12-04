@@ -3,6 +3,7 @@
  - Ender 3 Pro
  - BTT SKR Mini E3 v1.2
  - BTT TFT35 V3
+ - BTT Smart Filament Runout Sensor
  - Creality BL-Touch v3.1
  - NeoPixel LEDs x 7  - devs at Marlin think this doesn't work, yeah right
  - Raspberry Pi4 + OctoPrint + Night-light Pi-Cam
@@ -25,7 +26,73 @@
  - `Marlin/Configuration.h`
    - Set author to `"(taomyn)"`
    - Use `Version.h`
-   - Show custom boot screen
+   - Show custom boot screen and status screen
+   - Set `SERIAL_PORT 2`
+   - Enable `SERIAL_PORT_2 -1`
+   - Set `MOTHERBOARD BOARD_BTT_SKR_MINI_E3_V1_2`
+   - Set `CUSTOM_MACHINE_NAME "Ender-3 Pro"`
+   - Set `TEMP_SENSOR_BED 1`
+   - Enable `PID_EDIT_MENU`
+   - Enable `PID_AUTOTUNE_MENU`
+   - Set `DEFAULT_Kp`, `DEFAULT_Ki` and `DEFAULT_Kd` to recent PID tune values to save repeating when flashed
+   - Enable `PIDTEMPBED`
+   - Set `DEFAULT_bedKp`, `DEFAULT_bedKi` and `DEFAULT_bedKd` to recent PID bed tune values to save repeating when flashed
+   - Set `EXTRUDE_MINTEMP` to '180'
+   - Set `EXTRUDE_MAXLENGTH` to '600'
+   - Set X, Y, Z and E0 driver types to 'TMC2209'
+   - Set `DEFAULT_AXIS_STEPS_PER_UNIT` to recent calibration values to save repating when flashed
+   - Set `DEFAULT_MAX_FEEDRATE`, `DEFAULT_MAX_ACCELERATION`, `DEFAULT_ACCELERATION`, `DEFAULT_RETRACT_ACCELERATION`, `DEFAULT_TRAVEL_ACCELERATION`, `JUNCTION_DEVIATION_MM` to more suitable values
+   - Disable `JD_HANDLE_SMALL_SEGMENTS` - ***going to re-enable as this caused stuttering some months back and may now be fixed***
+   - Enable `S_CURVE_ACCELERATION`
+   - Enable `BLTOUCH`
+   - Set `NOZZLE_TO_PROBE_OFFSET` to correct values of BL-Touch installed
+   - Set `XY_PROBE_SPEED (166*60)`
+   - Set `MULTIPLE_PROBING 2`
+   - Set `Z_CLEARANCE_DEPLOY_PROBE 5`
+   - Set `Z_CLEARANCE_BETWEEN_PROBES 4`
+   - Set `Z_CLEARANCE_MULTI_PROBE 4`
+   - Enable `Z_AFTER_PROBING`
+   - Enable `Z_MIN_PROBE_REPEATABILITY_TEST`
+   - Set `INVERT_X_DIR true` and `INVERT_E0_DIR true` - correct for Ender 3 Pro
+   - Set `Z_AFTER_HOMING 20 ` - leaves more room to see between nozzle and bed
+   - Set `X_BED_SIZE 235` and `Y_BED_SIZE 235` - correct for Ender 3 Pro
+   - Set `X_MAX_POS (X_BED_SIZE+15)` - allows for bed level probing further out
+   - Set `Z_MAX_POS 250` - correct for Ender 3 Pro
+   - Enable `FILAMENT_RUNOUT_SENSOR`
+   - Set `FIL_RUNOUT_PIN PC12` - port labelled PT-DET which has extra pin for motion detection
+   - Set `FILAMENT_RUNOUT_SENSOR_DEBUG` - useful for seeing distance info in terminal output
+   - Set `FILAMENT_RUNOUT_DISTANCE_MM 25` - BTT recommended 7mm is too short causing false alarms
+   - Enable `FILAMENT_MOTION_SENSOR`
+   - Enable `AUTO_BED_LEVELING_BILINEAR`
+   - Enable `RESTORE_LEVELING_AFTER_G28`
+   - Enable `DEBUG_LEVELING_FEATURE` - as we have the RAM this is useful
+   - Enable `G26_MESH_VALIDATION` - must test this
+   - Set `GRID_MAX_POINTS_X 5` - 5 x 5 grid is more accurate
+   - Enable `EXTRAPOLATE_BEYOND_GRID`
+   - Enable `ABL_BILINEAR_SUBDIVISION`
+   - Enable `LCD_BED_LEVELING`
+   - Enable `MESH_EDIT_MENU`
+   - Enable `LEVEL_BED_CORNERS`
+   - Set `LEVEL_CORNERS_HEIGHT 0.1` - need to find out why this was recommended
+   - Enable `LEVEL_CENTER_TOO`
+   - Enable `Z_SAFE_HOMING`
+   - Set `HOMING_FEEDRATE_Z (10*60)`
+   - Enable `EEPROM_SETTINGS`
+   - Customised `Preheat Constants` to personal preferences
+   - Enable `NOZZLE_PARK_FEATURE`
+   - Enable `PRINTCOUNTER`
+   - Set `DISPLAY_CHARSET_HD44780 WESTERN`
+   - Enable `SDSUPPORT`
+   - Enable `SD_CHECK_AND_RETRY`
+   - Enable `INDIVIDUAL_AXIS_HOMING_MENU`
+   - Enable `CR10_STOCKDISPLAY`
+   - Enable `FAN_SOFT_PWM`
+   - Enable `NEOPIXEL_LED`
+   - Set `NEOPIXEL_TYPE NEO_GRB` - specfic to the LEDs I used
+   - Set `NEOPIXEL_PIN PC7` - correct port for BTT SKR Mini E3 v1.2
+   - Set `NEOPIXEL_PIXELS 7` - I have 7 LED strip connected
+   - Set `NEOPIXEL_BRIGHTNESS 255`
+   - Enable `NEOPIXEL_STARTUP_TEST`
  - `Marlin/Configuration_adv.h`
 # Marlin 3D Printer Firmware
 
