@@ -125,6 +125,7 @@
    - Enable `LCD_PROGRESS_BAR_TEST`
    - Enable `POWER_LOSS_RECOVERY`
    - Set `PLR_ENABLED_DEFAULT true`
+   - Set `POWER_LOSS_PIN -1` - needed as PC12 is used by filament runour sensor
    - Enable `SDCARD_SORT_ALPHA`
    - Set `SDSORT_LIMIT 255`
    - Set `SDSORT_GCODE true`
