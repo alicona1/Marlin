@@ -107,7 +107,7 @@
    - Set `SLOWDOWN_DIVISOR 8` - ***need to find out why this was recommended***
    - Enable `XY_FREQUENCY_LIMIT`
    - Enable `ADAPTIVE_STEP_SMOOTHING`
-   - Enable 'BEEP_ON_FEEDRATE_CHANGE'
+   - Enable `BEEP_ON_FEEDRATE_CHANGE`
    - Enable `LCD_INFO_MENU`
    - Enable `TURBO_BACK_MENU_ITEM`
    - Enable `SOUND_MENU_ITEM`
@@ -135,7 +135,7 @@
    - Enable `SCROLL_LONG_FILENAMES`
    - Enable `SD_ABORT_ON_ENDSTOP_HIT`
    - Enable `AUTO_REPORT_SD_STATUS`
-   - Enable `BINARY_FILE_TRANSFER` - could be useful for flashing via USB/OctoPrint
+   - Enable `MEATPACK` - for upcoming gcode compression support (OctoPrint)
    - Set `SDCARD_CONNECTION ONBOARD` - correct for BTT SKR Mini E3 v1.2
    - Enable `XYZ_NO_FRAME`
    - Disable `XYZ_HOLLOW_FRAME`
@@ -148,7 +148,7 @@
    - Enable `BABYSTEP_ZPROBE_OFFSET`
    - Enable `BABYSTEP_ZPROBE_GFX_OVERLAY` - reminds you which way to turn for adjustment
    - Enable `PROBING_MARGIN_LEFT`, `PROBING_MARGIN_RIGHT`, `PROBING_MARGIN_FRONT`, `PROBING_MARGIN_BACK` - to avoid clips holding bed
-   - Set `PROBING_MARGIN_FRONT 40` - to avoid clips holding bed
+   - Set `PROBING_MARGIN_xxxx nn` - to avoid clips holding bed
    - Set `BLOCK_BUFFER_SIZE 32`, `BUFSIZE 32` and `TX_BUFFER_SIZE 32` - better USB comms performance
    - Enable `EMERGENCY_PARSER`
    - Enable `ADVANCED_OK`
