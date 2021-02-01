@@ -61,7 +61,7 @@ struct ConditionalSerial : public SerialBase< ConditionalSerial<SerialT> > {
 
   bool    & condition;
   SerialT & out;
-  NO_INLINE size_t write(uint8_t c) { if (condition) return out.write(c); return 0; }
+  size_t write(uint8_t c) { if (condition) return out.write(c); return 0; }
   void flush()            { if (condition) out.flush();  }
   void begin(long br)     { out.begin(br); }
   void end()              { out.end(); }
@@ -83,7 +83,7 @@ struct ForwardSerial : public SerialBase< ForwardSerial<SerialT> > {
   typedef SerialBase< ForwardSerial<SerialT> > BaseClassT;
 
   SerialT & out;
-  NO_INLINE size_t write(uint8_t c) { return out.write(c); }
+  size_t write(uint8_t c) { return out.write(c); }
   void flush()            { out.flush();  }
   void begin(long br)     { out.begin(br); }
   void end()              { out.end(); }
@@ -111,12 +111,12 @@ struct RuntimeSerial : public SerialBase< RuntimeSerial<SerialT> >, public Seria
   EndOfMessageHook eofHook;
   void *           userPointer;
 
-  NO_INLINE size_t write(uint8_t c) {
+  size_t write(uint8_t c) {
     if (writeHook) writeHook(userPointer, c);
     return SerialT::write(c);
   }
 
-  NO_INLINE void msgDone() {
+  void msgDone() {
     if (eofHook) eofHook(userPointer);
   }
 
@@ -130,12 +130,7 @@ struct RuntimeSerial : public SerialBase< RuntimeSerial<SerialT> >, public Seria
 
   using BaseClassT::print;
   using BaseClassT::println;
-
-
-  // Underlying implementation might use Arduino's bool operator
-  bool connected() {
-    return Private::HasMember_connected<SerialT>::value ? CALL_IF_EXISTS(bool, static_cast<SerialT*>(this), connected) : static_cast<SerialT*>(this)->operator bool();
-  }
+  
 
   void setHook(WriteHook writeHook = 0, EndOfMessageHook eofHook = 0, void * userPointer = 0) {
     // Order is important here as serial code can be called inside interrupts
@@ -170,13 +165,13 @@ struct MultiSerial : public SerialBase< MultiSerial<Serial0T, Serial1T, offset> 
     AllMask           = FirstOutputMask | SecondOutputMask,
   };
 
-  NO_INLINE size_t write(uint8_t c) {
+  size_t write(uint8_t c) {
     size_t ret = 0;
     if (portMask & FirstOutputMask)   ret = serial0.write(c);
     if (portMask & SecondOutputMask)  ret = serial1.write(c) | ret;
     return ret;
   }
-  NO_INLINE void msgDone() {
+  void msgDone() {
     if (portMask & FirstOutputMask)   serial0.msgDone();
     if (portMask & SecondOutputMask)  serial1.msgDone();
   }
@@ -187,7 +182,7 @@ struct MultiSerial : public SerialBase< MultiSerial<Serial0T, Serial1T, offset> 
       default: return false;
     }
   }
-  NO_INLINE int read(uint8_t index) {
+  int read(uint8_t index) {
     switch(index) {
       case 0 + offset: return serial0.read();
       case 1 + offset: return serial1.read();
@@ -213,11 +208,11 @@ struct MultiSerial : public SerialBase< MultiSerial<Serial0T, Serial1T, offset> 
   using BaseClassT::read;
 
   // Redirect flush
-  NO_INLINE void flush()      {
+  void flush()      {
     if (portMask & FirstOutputMask)   serial0.flush();
     if (portMask & SecondOutputMask)  serial1.flush();
   }
-  NO_INLINE void flushTX()    {
+  void flushTX()    {
     if (portMask & FirstOutputMask)   CALL_IF_EXISTS(void, &serial0, flushTX);
     if (portMask & SecondOutputMask)  CALL_IF_EXISTS(void, &serial1, flushTX);
   }
