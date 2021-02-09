@@ -259,7 +259,11 @@
 #define MORE_CUSTOM4_TEXT_RU  USER_DESC_4
 #define MORE_CUSTOM5_TEXT_RU  USER_DESC_5
 #define MORE_CUSTOM6_TEXT_RU  USER_DESC_6
+#define MORE_CUSTOM7_TEXT_RU  USER_DESC_7
 
+//Malderin translate
+//
+//
 #define EEPROM_STORE_TIPS_RU          "Cохранить настройки в EEPROM?"
 #define EEPROM_READ_TIPS_RU           "читать настройки из EEPROM?"
 #define EEPROM_REVERT_TIPS_RU         "Cбросить настройки к значениям по умолчанию?"
@@ -359,3 +363,5 @@
 
 #define ENCODER_CONF_TITLE_RU           "Hастройки принтера>Hастройки энкодера"
 #define ENCODER_CONF_TEXT_RU            "энкодер используется?"
+
+//end of Malderin translate

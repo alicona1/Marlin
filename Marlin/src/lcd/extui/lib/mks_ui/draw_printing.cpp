@@ -235,8 +235,7 @@ void disp_print_time() {
 }
 
 void disp_fan_Zpos() {
-  char str_1[16];
-  sprintf_P(public_buf_l, PSTR("%s"), dtostrf(current_position[Z_AXIS], 1, 3, str_1));
+  sprintf_P(public_buf_l, PSTR("%.3f"), current_position[Z_AXIS]);
   lv_label_set_text(labelZpos, public_buf_l);
 }
 

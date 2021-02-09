@@ -118,10 +118,12 @@ bool MarlinUI::detected() { return true; }
       #endif
 
       #if ENABLED(CUSTOM_BOOTSCREEN_ANIMATED)
-        #if ENABLED(CUSTOM_BOOTSCREEN_ANIMATED_FRAME_TIME)
-          const u8g_pgm_uint8_t * const bmp = (u8g_pgm_uint8_t*)pgm_read_ptr(&custom_bootscreen_animation[frame].bitmap);
+        const void * const frame_ptr = pgm_read_ptr(&custom_bootscreen_animation[frame]);
+        #if ENABLED(CUSTOM_BOOTSCREEN_TIME_PER_FRAME)
+          const boot_frame_t * const frame_info = (boot_frame_t*)frame_ptr;
+          const u8g_pgm_uint8_t * const bmp = (u8g_pgm_uint8_t*)pgm_read_ptr(&frame_info->bitmap);
         #else
-          const u8g_pgm_uint8_t * const bmp = (u8g_pgm_uint8_t*)pgm_read_ptr(&custom_bootscreen_animation[frame]);
+          const u8g_pgm_uint8_t * const bmp = (u8g_pgm_uint8_t*)frame_ptr;
         #endif
       #else
         const u8g_pgm_uint8_t * const bmp = custom_start_bmp;
@@ -148,15 +150,16 @@ bool MarlinUI::detected() { return true; }
         constexpr millis_t frame_time = 0;
         constexpr uint8_t f = 0;
       #else
-        #if DISABLED(CUSTOM_BOOTSCREEN_ANIMATED_FRAME_TIME)
+        #if DISABLED(CUSTOM_BOOTSCREEN_TIME_PER_FRAME)
           constexpr millis_t frame_time = CUSTOM_BOOTSCREEN_FRAME_TIME;
         #endif
         LOOP_L_N(f, COUNT(custom_bootscreen_animation))
       #endif
         {
-          #if ENABLED(CUSTOM_BOOTSCREEN_ANIMATED_FRAME_TIME)
+          #if ENABLED(CUSTOM_BOOTSCREEN_TIME_PER_FRAME)
             const uint8_t fr = _MIN(f, COUNT(custom_bootscreen_animation) - 1);
-            const millis_t frame_time = pgm_read_word(&custom_bootscreen_animation[fr].duration);
+            const boot_frame_t * const frame_info = (boot_frame_t*)pgm_read_ptr(&custom_bootscreen_animation[fr]);
+            const millis_t frame_time = pgm_read_word(&frame_info->duration);
           #endif
           u8g.firstPage();
           do { draw_custom_bootscreen(f); } while (u8g.nextPage());
