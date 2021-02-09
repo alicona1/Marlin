@@ -613,8 +613,8 @@ inline void manage_inactivity(const bool ignore_stepper_queue=false) {
  */
 void idle(TERN_(ADVANCED_PAUSE_FEATURE, bool no_stepper_sleep/*=false*/)) {
   #if ENABLED(MARLIN_DEV_MODE)
-    static uint8_t idle_depth = 0;
-    if (++idle_depth > 5) SERIAL_ECHOLNPAIR("idle() call depth: ", int(idle_depth));
+    static uint16_t idle_depth = 0;
+    if (++idle_depth > 5) SERIAL_ECHOLNPAIR("idle() call depth: ", idle_depth);
   #endif
 
   // Core Marlin activities
@@ -686,8 +686,8 @@ void idle(TERN_(ADVANCED_PAUSE_FEATURE, bool no_stepper_sleep/*=false*/)) {
   // Auto-report Temperatures / SD Status
   #if HAS_AUTO_REPORTING
     if (!gcode.autoreport_paused) {
-      TERN_(AUTO_REPORT_TEMPERATURES, thermalManager.auto_report_temperatures());
-      TERN_(AUTO_REPORT_SD_STATUS, card.auto_report_sd_status());
+      TERN_(AUTO_REPORT_TEMPERATURES, thermalManager.auto_reporter.tick());
+      TERN_(AUTO_REPORT_SD_STATUS, card.auto_reporter.tick());
     }
   #endif
 
@@ -885,6 +885,17 @@ void setup() {
   #endif
   #define SETUP_RUN(C) do{ SETUP_LOG(STRINGIFY(C)); C; }while(0)
 
+  MYSERIAL0.begin(BAUDRATE);
+  millis_t serial_connect_timeout = millis() + 1000UL;
+  while (!MYSERIAL0.connected() && PENDING(millis(), serial_connect_timeout)) { /*nada*/ }
+
+  #if HAS_MULTI_SERIAL && !HAS_ETHERNET
+    MYSERIAL1.begin(BAUDRATE);
+    serial_connect_timeout = millis() + 1000UL;
+    while (!MYSERIAL1.connected() && PENDING(millis(), serial_connect_timeout)) { /*nada*/ }
+  #endif
+  SERIAL_ECHOLNPGM("start");
+
   // Set up these pins early to prevent suicide
   #if HAS_KILL
     SETUP_LOG("KILL_PIN");
@@ -917,17 +928,6 @@ void setup() {
     #endif
   #endif
 
-  MYSERIAL0.begin(BAUDRATE);
-  millis_t serial_connect_timeout = millis() + 1000UL;
-  while (!MYSERIAL0.connected() && PENDING(millis(), serial_connect_timeout)) { /*nada*/ }
-
-  #if HAS_MULTI_SERIAL && !HAS_ETHERNET
-    MYSERIAL1.begin(BAUDRATE);
-    serial_connect_timeout = millis() + 1000UL;
-    while (!MYSERIAL1.connected() && PENDING(millis(), serial_connect_timeout)) { /*nada*/ }
-  #endif
-  SERIAL_ECHOLNPGM("start");
-
   #if BOTH(HAS_TFT_LVGL_UI, MKS_WIFI_MODULE)
     mks_esp_wifi_init();
     WIFISERIAL.begin(WIFI_BAUDRATE);
@@ -937,11 +937,11 @@ void setup() {
 
   SETUP_RUN(HAL_init());
 
-  // Init and disable SPI thermocouples
-  #if HEATER_0_USES_MAX6675
+  // Init and disable SPI thermocouples; this is still needed
+  #if TEMP_SENSOR_0_IS_MAX_TC
     OUT_WRITE(MAX6675_SS_PIN, HIGH);  // Disable
   #endif
-  #if HEATER_1_USES_MAX6675
+  #if TEMP_SENSOR_1_IS_MAX_TC
     OUT_WRITE(MAX6675_SS2_PIN, HIGH); // Disable
   #endif
 
@@ -1003,7 +1003,7 @@ void setup() {
     );
   #endif
   SERIAL_ECHO_MSG("Compiled: " __DATE__);
-  SERIAL_ECHO_MSG(STR_FREE_MEMORY, freeMemory(), STR_PLANNER_BUFFER_BYTES, (int)sizeof(block_t) * (BLOCK_BUFFER_SIZE));
+  SERIAL_ECHO_MSG(STR_FREE_MEMORY, freeMemory(), STR_PLANNER_BUFFER_BYTES, sizeof(block_t) * (BLOCK_BUFFER_SIZE));
 
   // Some HAL need precise delay adjustment
   calibrate_delay_loop();
