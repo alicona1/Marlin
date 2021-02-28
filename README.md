@@ -46,7 +46,8 @@
    - Enable `S_CURVE_ACCELERATION`
    - Enable `BLTOUCH`
    - Set `NOZZLE_TO_PROBE_OFFSET` to correct values of BL-Touch installed
-   - Set `XY_PROBE_SPEED (166*60)`
+   - Set `XY_PROBE_FEEDRATE (166*60)`
+   - Set `Z_PROBE_FEEDRATE_FAST (10*60)`
    - Set `MULTIPLE_PROBING 2`
    - Set `Z_CLEARANCE_DEPLOY_PROBE 5`
    - Set `Z_CLEARANCE_BETWEEN_PROBES 4`
