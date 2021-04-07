@@ -170,6 +170,7 @@
    - Enable `REPORT_FAN_CHANGE`
    - Enable `GCODE_CASE_INSENSITIVE` - personal hate of mine
    - Enable `CANCEL_OBJECTS`
+   - Enable `BEZIER_CURVE_SUPPORT` - G5 command, no idea if this will work yet
 # Marlin 3D Printer Firmware
 
 ![GitHub](https://img.shields.io/github/license/marlinfirmware/marlin.svg)
