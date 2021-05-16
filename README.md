@@ -5,15 +5,14 @@
  - BTT TFT35 V3
  - BTT Smart Filament Runout Sensor
  - Creality BL-Touch v3.1
- - NeoPixel LEDs x 7  - devs at Marlin think this doesn't work, yeah right
+ - NeoPixel LEDs x 7  - devs at Marlin think this doesn't work, yeah right, fixed in new stm32 builds
  - Raspberry Pi4 + OctoPrint + Night-light Pi-Cam
 ## Software for builds
  - Visual Studio Code + PlatformIO + Auto Marlin Builder
  - Github Desktop for Windows
 ## Marlin Configurations (work in progress)
  - `platformio.ini`
-   - default environment: `STM32F103RC_btt_512K`
-   - additional libdeps: `${common_stm32f1.lib_deps}, Adafruit NeoPixel=https://github.com/Taomyn/Adafruit_NeoPixel`
+   - default environment: `STM32F103RC_btt_512K_stm32`
  - `Marlin/Version.h`
    - Get rid of "bugfix" from build version: `"v2.0.x"`
    - Set build date to date/time firmware was compiled: `__DATE__ " " __TIME__`
