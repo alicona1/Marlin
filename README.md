@@ -27,7 +27,8 @@
    - Use `Version.h`
    - Show custom boot screen and status screen
    - Set `SERIAL_PORT 2`
-   - Enable `SERIAL_PORT_2 -1`
+   - Set `BAUDRATE 250000`
+   - Enable `BAUD_RATE_GCODE`
    - Set `MOTHERBOARD BOARD_BTT_SKR_MINI_E3_V1_2`
    - Set `CUSTOM_MACHINE_NAME "Ender-3 Pro"`
    - Set `TEMP_SENSOR_BED 1`
