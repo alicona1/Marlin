@@ -1,3 +1,178 @@
+# My Customisation
+## Printer Hardware
+ - Ender 3 Pro
+ - BTT SKR Mini E3 v3 (still need to update below for migration from v1.2)
+ - BTT TFT35 V3
+ - BTT Smart Filament Runout Sensor
+ - Creality BL-Touch v3.1
+ - NeoPixel LEDs x 7  - devs at Marlin think this doesn't work, yeah right, fixed in new stm32 builds
+ - Raspberry Pi4 + OctoPrint + Night-light Pi-Cam
+## Software for builds
+ - Visual Studio Code + PlatformIO + Auto Marlin Builder
+ - Github Desktop for Windows
+## Marlin Configurations (work in progress)
+ - `platformio.ini`
+   - default environment: `STM32F103RC_btt_512K_stm32`
+ - `Marlin/Version.h`
+   - Get rid of "bugfix" from build version: `"v2.0.x"`
+   - Set build date to date/time firmware was compiled: `__DATE__ " " __TIME__`
+ - `Marlin/_Bootscreen.h`
+   - Copied from Ender 3 Pro configuration archive
+ - `Marlin/_Statusscreen.h`
+   - Copied from Ender 3 Pro configuration archive
+ - `Marlin/src/HAL/STM32F1/inc/SanityCheck.h`
+   - Commented out error `NEOPIXEL_LED (Adafruit NeoPixel) is not supported for HAL/STM32F1.`
+ - `Marlin/Configuration.h`
+   - Set author to `"(taomyn)"`
+   - Use `Version.h`
+   - Show custom boot screen and status screen
+   - Set `SERIAL_PORT 2`
+   - Set `BAUDRATE 250000`
+   - Enable `BAUD_RATE_GCODE`
+   - Set `MOTHERBOARD BOARD_BTT_SKR_MINI_E3_V1_2`
+   - Set `CUSTOM_MACHINE_NAME "Ender-3 Pro"`
+   - Set `TEMP_SENSOR_BED 1`
+   - Enable `PID_EDIT_MENU`
+   - Enable `PID_AUTOTUNE_MENU`
+   - Set `DEFAULT_Kp`, `DEFAULT_Ki` and `DEFAULT_Kd` to recent PID tune values to save repeating when flashed
+   - Enable `PIDTEMPBED`
+   - Set `DEFAULT_bedKp`, `DEFAULT_bedKi` and `DEFAULT_bedKd` to recent PID bed tune values to save repeating when flashed
+   - Set `EXTRUDE_MINTEMP` to '180'
+   - Set `EXTRUDE_MAXLENGTH` to '600'
+   - Set X, Y, Z and E0 driver types to 'TMC2209'
+   - Set `DEFAULT_AXIS_STEPS_PER_UNIT` to recent calibration values to save repating when flashed
+   - Set `DEFAULT_MAX_FEEDRATE`, `DEFAULT_MAX_ACCELERATION`, `DEFAULT_ACCELERATION`, `DEFAULT_RETRACT_ACCELERATION`, `DEFAULT_TRAVEL_ACCELERATION`, `JUNCTION_DEVIATION_MM` to more suitable values
+   - Disable `JD_HANDLE_SMALL_SEGMENTS` - ***going to re-enable as this caused stuttering some months back and may now be fixed***
+   - Enable `S_CURVE_ACCELERATION`
+   - Enable `BLTOUCH`
+   - Set `NOZZLE_TO_PROBE_OFFSET` to correct values of BL-Touch installed
+   - Set `XY_PROBE_FEEDRATE (166*60)`
+   - Set `Z_PROBE_FEEDRATE_FAST (10*60)`
+   - Set `MULTIPLE_PROBING 2`
+   - Set `Z_CLEARANCE_DEPLOY_PROBE 5`
+   - Set `Z_CLEARANCE_BETWEEN_PROBES 4`
+   - Set `Z_CLEARANCE_MULTI_PROBE 4`
+   - Enable `Z_AFTER_PROBING`
+   - Enable `Z_MIN_PROBE_REPEATABILITY_TEST`
+   - Set `INVERT_X_DIR true` and `INVERT_E0_DIR true` - correct for Ender 3 Pro
+   - Set `Z_AFTER_HOMING 20 ` - leaves more room to see between nozzle and bed
+   - Set `X_BED_SIZE 235` and `Y_BED_SIZE 235` - correct for Ender 3 Pro
+   - Set `X_MAX_POS (X_BED_SIZE+15)` - allows for bed level probing further out
+   - Set `Z_MAX_POS 250` - correct for Ender 3 Pro
+   - Enable `FILAMENT_RUNOUT_SENSOR`
+   - Set `FIL_RUNOUT_PIN PC12` - port labelled PT-DET which has extra pin for motion detection
+   - Set `FILAMENT_RUNOUT_SENSOR_DEBUG` - useful for seeing distance info in terminal output
+   - Set `FILAMENT_RUNOUT_DISTANCE_MM 25` - BTT recommended 7mm is too short causing false alarms
+   - Enable `FILAMENT_MOTION_SENSOR`
+   - Enable `AUTO_BED_LEVELING_BILINEAR`
+   - Enable `RESTORE_LEVELING_AFTER_G28`
+   - Enable `DEBUG_LEVELING_FEATURE` - as we have the RAM this is useful
+   - Enable `G26_MESH_VALIDATION` - must test this
+   - Set `GRID_MAX_POINTS_X 5` - 5 x 5 grid is more accurate
+   - Enable `EXTRAPOLATE_BEYOND_GRID`
+   - Enable `ABL_BILINEAR_SUBDIVISION`
+   - Enable `LCD_BED_LEVELING`
+   - Enable `MESH_EDIT_MENU`
+   - Enable `LEVEL_BED_CORNERS`
+   - Set `LEVEL_CORNERS_HEIGHT 0.1` - ***need to find out why this was recommended***
+   - Enable `LEVEL_CENTER_TOO`
+   - Enable `Z_SAFE_HOMING`
+   - Set `HOMING_FEEDRATE_Z (10*60)`
+   - Enable `EEPROM_SETTINGS`
+   - Customised `Preheat Constants` to personal preferences
+   - Enable `NOZZLE_PARK_FEATURE`
+   - Enable `PRINTCOUNTER`
+   - Set `DISPLAY_CHARSET_HD44780 WESTERN`
+   - Enable `SDSUPPORT`
+   - Enable `SD_CHECK_AND_RETRY`
+   - Enable `INDIVIDUAL_AXIS_HOMING_MENU`
+   - Enable `CR10_STOCKDISPLAY`
+   - Enable `FAN_SOFT_PWM`
+   - Enable `NEOPIXEL_LED`
+   - Set `NEOPIXEL_TYPE NEO_GRB` - specfic to the LEDs I used
+   - Set `NEOPIXEL_PIN PC7` - correct port for BTT SKR Mini E3 v1.2
+   - Set `NEOPIXEL_PIXELS 7` - I have 7 LED strip connected
+   - Set `NEOPIXEL_BRIGHTNESS 255`
+   - Enable `NEOPIXEL_STARTUP_TEST`
+ - `Marlin/Configuration_adv.h`
+   - Set `WATCH_TEMP_PERIOD 40`
+   - Set `WATCH_BED_TEMP_PERIOD 90`
+   - Enable `HOTEND_IDLE_TIMEOUT`
+   - Set `HOTEND_IDLE_TIMEOUT_SEC (10*60)`
+   - Enable `CASE_LIGHT_ENABLE`
+   - Set `CASE_LIGHT_PIN 0`
+   - Set `CASE_LIGHT_DEFAULT_BRIGHTNESS 255`
+   - Enable `CASE_LIGHT_MENU`
+   - Enable `CASE_LIGHT_USE_NEOPIXEL` - use the same LED strip as the main ones
+   - Enable `QUICK_HOME`
+   - Set `SLOWDOWN_DIVISOR 8` - ***need to find out why this was recommended***
+   - Enable `XY_FREQUENCY_LIMIT`
+   - Enable `ADAPTIVE_STEP_SMOOTHING`
+   - Enable `BEEP_ON_FEEDRATE_CHANGE`
+   - Enable `LCD_INFO_MENU`
+   - Enable `TURBO_BACK_MENU_ITEM`
+   - Enable `SOUND_MENU_ITEM`
+   - Set `LED_USER_PRESET_GREEN 255` and `LED_USER_PRESET_BLUE 255` - correct for my LEDs
+   - Enable `LED_USER_PRESET_STARTUP`
+   - Enable `STATUS_MESSAGE_SCROLLING`
+   - Enable `LCD_DECIMAL_SMALL_XY`
+   - Set `LCD_TIMEOUT_TO_STATUS 30000` - stops it dimming too quickly
+   - Enable `LCD_SET_PROGRESS_MANUALLY`
+   - Enable `SHOW_REMAINING_TIME`
+   - Enable `USE_M73_REMAINING_TIME`
+   - Enable `ROTATE_PROGRESS_DISPLAY`
+   - Enable `PRINT_PROGRESS_SHOW_DECIMALS`
+   - Enable `LCD_PROGRESS_BAR`
+   - Enable `LCD_PROGRESS_BAR_TEST`
+   - Enable `SDCARD_SORT_ALPHA`
+   - Set `SDSORT_LIMIT 255`
+   - Set `SDSORT_GCODE true`
+   - Set `SDSORT_USES_RAM true`
+   - Set `SDSORT_CACHE_NAMES true`
+   - Enable `LONG_FILENAME_HOST_SUPPORT`
+   - Enable `SCROLL_LONG_FILENAMES`
+   - Enable `SD_ABORT_ON_ENDSTOP_HIT`
+   - Enable `AUTO_REPORT_SD_STATUS`
+   - Enable `MEATPACK` - for upcoming gcode compression support (OctoPrint)
+   - Set `SDCARD_CONNECTION ONBOARD` - correct for BTT SKR Mini E3 v1.2
+   - Enable `XYZ_NO_FRAME`
+   - Disable `XYZ_HOLLOW_FRAME`
+   - Enable `STATUS_ALT_BED_BITMAP` and `STATUS_ALT_FAN_BITMAP` - I think they look better
+   - Set `STATUS_FAN_FRAMES 4`
+   - Enable `BOOT_MARLIN_LOGO_ANIMATED`
+   - Enable `BABYSTEPPING`
+   - Set `BABYSTEP_MULTIPLICATOR_Z  4`
+   - Enable `DOUBLECLICK_FOR_Z_BABYSTEPPING`
+   - Enable `BABYSTEP_ZPROBE_OFFSET`
+   - Enable `BABYSTEP_ZPROBE_GFX_OVERLAY` - reminds you which way to turn for adjustment
+   - Enable `PROBING_MARGIN_LEFT`, `PROBING_MARGIN_RIGHT`, `PROBING_MARGIN_FRONT`, `PROBING_MARGIN_BACK` - to avoid clips holding bed
+   - Set `PROBING_MARGIN_xxxx nn` - to avoid clips holding bed
+   - Set `BLOCK_BUFFER_SIZE 32`, `BUFSIZE 32` and `TX_BUFFER_SIZE 32` - better USB comms performance
+   - Enable `EMERGENCY_PARSER`
+   - Enable `ADVANCED_OK`
+   - Enable `ADVANCED_PAUSE_FEATURE`
+   - Set `FILAMENT_CHANGE_UNLOAD_FEEDRATE 100`
+   - Set `FILAMENT_CHANGE_UNLOAD_LENGTH 600`
+   - Set `FILAMENT_CHANGE_SLOW_LOAD_FEEDRATE 10`
+   - Set `FILAMENT_CHANGE_SLOW_LOAD_LENGTH 25`
+   - Set `FILAMENT_CHANGE_FAST_LOAD_FEEDRATE 10`
+   - Set `FILAMENT_CHANGE_FAST_LOAD_LENGTH 300`
+   - Set `ADVANCED_PAUSE_CONTINUOUS_PURGE`
+   - Enable `PARK_HEAD_ON_PAUSE`
+   - Enable `FILAMENT_LOAD_UNLOAD_GCODES`
+   - Set `X_CURRENT 580`, `Y_CURRENT 580`, `Z_CURRENT 580` and `E0_CURRENT 650` - correct for Ender 3 Pro
+   - Set `CHOPPER_TIMING CHOPPER_DEFAULT_24V`- correct for Ender 3 Pro with 24v PSU
+   - Enable `MONITOR_DRIVER_STATUS`
+   - Enable `SQUARE_WAVE_STEPPING`
+   - Enable `TMC_DEBUG`
+   - Enable `M115_GEOMETRY_REPORT`
+   - Enable `M114_DETAIL`
+   - Enable `REPORT_FAN_CHANGE`
+   - Enable `GCODE_CASE_INSENSITIVE` - personal hate of mine
+   - Enable `CANCEL_OBJECTS`
+   - Enable `BEZIER_CURVE_SUPPORT` - G5 command, no idea if this will work yet
+   - Enable `LIMITED_MAX_ACCEL_EDITING`
+
 # Marlin 3D Printer Firmware
 
 ![GitHub](https://img.shields.io/github/license/marlinfirmware/marlin.svg)
