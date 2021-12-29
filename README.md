@@ -114,6 +114,10 @@
    - Set `WATCH_BED_TEMP_PERIOD 90`
    - Enable `HOTEND_IDLE_TIMEOUT`
    - Set `HOTEND_IDLE_TIMEOUT_SEC (10*60)`
+   - Enable `USE_CONTROLLER_FAN`
+   - Set `CONTROLLER_FAN_PIN PB15`
+   - Enable `CONTROLLER_FAN_EDITABLE`
+   - Set `E0_AUTO_FAN_PIN PC7`
    - Enable `CASE_LIGHT_ENABLE`
    - Set `CASE_LIGHT_PIN 0`
    - Set `CASE_LIGHT_DEFAULT_BRIGHTNESS 255`
@@ -124,14 +128,19 @@
    - Enable `XY_FREQUENCY_LIMIT`
    - Enable `ADAPTIVE_STEP_SMOOTHING`
    - Enable `BEEP_ON_FEEDRATE_CHANGE`
+   - Enable `PROBE_OFFSET_WIZARD`
+   - Enable `PROBE_OFFSET_WIZARD_START_Z`
+   - Enable `PROBE_OFFSET_WIZARD_XY_POS`
    - Enable `LCD_INFO_MENU`
    - Enable `TURBO_BACK_MENU_ITEM`
-   - Enable `SOUND_MENU_ITEM`
+   - Enable `LED_CONTROL_MENU`
    - Set `LED_USER_PRESET_GREEN 255` and `LED_USER_PRESET_BLUE 255` - correct for my LEDs
    - Enable `LED_USER_PRESET_STARTUP`
+   - Set `LCD_TIMEOUT_TO_STATUS 30000` - stops it dimming too quickly
+   - Enable `SOUND_MENU_ITEM`
+   - Disable `BOOT_MARLIN_LOGO_SMALL`
    - Enable `STATUS_MESSAGE_SCROLLING`
    - Enable `LCD_DECIMAL_SMALL_XY`
-   - Set `LCD_TIMEOUT_TO_STATUS 30000` - stops it dimming too quickly
    - Enable `LCD_SET_PROGRESS_MANUALLY`
    - Enable `SHOW_REMAINING_TIME`
    - Enable `USE_M73_REMAINING_TIME`
@@ -139,19 +148,23 @@
    - Enable `PRINT_PROGRESS_SHOW_DECIMALS`
    - Enable `LCD_PROGRESS_BAR`
    - Enable `LCD_PROGRESS_BAR_TEST`
+   - Enable `SD_IGNORE_AT_STARTUP`
+   - Enable `GCODE_REPEAT_MARKERS`
+   - Enable `BROWSE_MEDIA_ON_INSERT`
    - Enable `SDCARD_SORT_ALPHA`
    - Set `SDSORT_LIMIT 255`
    - Set `SDSORT_GCODE true`
    - Set `SDSORT_USES_RAM true`
    - Set `SDSORT_CACHE_NAMES true`
+   - Enable `UTF_FILENAME_SUPPORT`
    - Enable `LONG_FILENAME_HOST_SUPPORT`
    - Enable `SCROLL_LONG_FILENAMES`
    - Enable `SD_ABORT_ON_ENDSTOP_HIT`
    - Enable `AUTO_REPORT_SD_STATUS`
-   - Enable `MEATPACK` - for upcoming gcode compression support (OctoPrint)
-   - Set `SDCARD_CONNECTION ONBOARD` - correct for BTT SKR Mini E3 v1.2
+   - Set `SDCARD_CONNECTION ONBOARD` - correct for BTT SKR Mini E3 v3.0
    - Enable `XYZ_NO_FRAME`
    - Disable `XYZ_HOLLOW_FRAME`
+   - Disable `STATUS_CHAMBER_ANIM`
    - Enable `STATUS_ALT_BED_BITMAP` and `STATUS_ALT_FAN_BITMAP` - I think they look better
    - Set `STATUS_FAN_FRAMES 4`
    - Enable `BOOT_MARLIN_LOGO_ANIMATED`
@@ -163,8 +176,10 @@
    - Enable `PROBING_MARGIN_LEFT`, `PROBING_MARGIN_RIGHT`, `PROBING_MARGIN_FRONT`, `PROBING_MARGIN_BACK` - to avoid clips holding bed
    - Set `PROBING_MARGIN_xxxx nn` - to avoid clips holding bed
    - Set `BLOCK_BUFFER_SIZE 32`, `BUFSIZE 32` and `TX_BUFFER_SIZE 32` - better USB comms performance
+   - Enable `BEZIER_CURVE_SUPPORT`
    - Enable `EMERGENCY_PARSER`
    - Enable `ADVANCED_OK`
+   - Enable `SERIAL_FLOAT_PRECISION`
    - Enable `ADVANCED_PAUSE_FEATURE`
    - Set `FILAMENT_CHANGE_UNLOAD_FEEDRATE 100`
    - Set `FILAMENT_CHANGE_UNLOAD_LENGTH 600`
@@ -176,17 +191,28 @@
    - Enable `PARK_HEAD_ON_PAUSE`
    - Enable `FILAMENT_LOAD_UNLOAD_GCODES`
    - Set `X_CURRENT 580`, `Y_CURRENT 580`, `Z_CURRENT 580` and `E0_CURRENT 650` - correct for Ender 3 Pro
+   - Set `X_CURRENT_HOME X_CURRENT /2`
+   - Set `Y_CURRENT_HOME Y_CURRENT /2`
+   - Set `Z_CURRENT_HOME Z_CURRENT /2`
    - Set `CHOPPER_TIMING CHOPPER_DEFAULT_24V`- correct for Ender 3 Pro with 24v PSU
    - Enable `MONITOR_DRIVER_STATUS`
+   - Set `Z_HYBRID_THRESHOLD 20`
+   - Set `X_STALL_SENSITIVITY 72`
+   - Set `Y_STALL_SENSITIVITY 70`
+   - Set `Z_STALL_SENSITIVITY 10`
+   - Enable `IMPROVE_HOMING_RELIABILITY`
    - Enable `SQUARE_WAVE_STEPPING`
    - Enable `TMC_DEBUG`
    - Enable `M115_GEOMETRY_REPORT`
    - Enable `M114_DETAIL`
+   - Enable `M114_REALTIME`
    - Enable `REPORT_FAN_CHANGE`
+   - Enable `GCODE_QUOTED_STRINGS`
    - Enable `GCODE_CASE_INSENSITIVE` - personal hate of mine
+   - Enable `HOST_ACTION_COMMANDS`
+   - Enable `HOST_PAUSE_M76`
+   - Enable `HOST_PROMPT_SUPPORT`
    - Enable `CANCEL_OBJECTS`
-   - Enable `BEZIER_CURVE_SUPPORT` - G5 command, no idea if this will work yet
-   - Enable `LIMITED_MAX_ACCEL_EDITING`
 
 # Marlin 3D Printer Firmware
 
