@@ -1,18 +1,18 @@
 # My Customisation
 ## Printer Hardware
  - Ender 3 Pro
- - BTT SKR Mini E3 v3 (still need to update below for migration from v1.2)
+ - BTT SKR Mini E3 v3
  - BTT TFT35 V3
  - BTT Smart Filament Runout Sensor
  - Creality BL-Touch v3.1
- - NeoPixel LEDs x 7  - devs at Marlin think this doesn't work, yeah right, fixed in new stm32 builds
+ - NeoPixel LEDs x 7
  - Raspberry Pi4 + OctoPrint + Night-light Pi-Cam
 ## Software for builds
  - Visual Studio Code + PlatformIO + Auto Marlin Builder
  - Github Desktop for Windows
 ## Marlin Configurations (work in progress)
  - `platformio.ini`
-   - default environment: `STM32F103RC_btt_512K_stm32`
+   - default environment: `STM32G0B1RE_btt`
  - `Marlin/Version.h`
    - Get rid of "bugfix" from build version: `"v2.0.x"`
    - Set build date to date/time firmware was compiled: `__DATE__ " " __TIME__`
@@ -21,31 +21,42 @@
  - `Marlin/_Statusscreen.h`
    - Copied from Ender 3 Pro configuration archive
  - `Marlin/src/HAL/STM32F1/inc/SanityCheck.h`
-   - Commented out error `NEOPIXEL_LED (Adafruit NeoPixel) is not supported for HAL/STM32F1.`
+   - Disable probe margin checks to allow for greater coverage of bed
+   - Commented out error `PROBING_MARGIN_BACK must be >= 0`
+   - Commented out error `PROBING_MARGIN_FRONT must be >= 0`
+   - Commented out error `PROBING_MARGIN_LEFT must be >= 0`
+   - Commented out error `PROBING_MARGIN_RIGHT must be >= 0`
  - `Marlin/Configuration.h`
-   - Set author to `"(taomyn)"`
-   - Use `Version.h`
-   - Show custom boot screen and status screen
+   - Set author to `"(Taomyn, for SKR-mini-E3-V3.0)"`
+   - Enable `CUSTOM_VERSION_FILE`
+   - Enable `SHOW_CUSTOM_BOOTSCREEN`
+   - Enable `CUSTOM_STATUS_SCREEN_IMAGE`
+   - Set `MOTHERBOARD BOARD_BTT_SKR_MINI_E3_V3_0`
    - Set `SERIAL_PORT 2`
    - Set `BAUDRATE 250000`
    - Enable `BAUD_RATE_GCODE`
-   - Set `MOTHERBOARD BOARD_BTT_SKR_MINI_E3_V1_2`
+   - Enable `SERIAL_PORT_2`
+   - Enable `BAUDRATE_2`
    - Set `CUSTOM_MACHINE_NAME "Ender-3 Pro"`
    - Set `TEMP_SENSOR_BED 1`
+   - Set `HEATER_0_MAXTEMP 315` to allow for some PETG filaments
    - Enable `PID_EDIT_MENU`
    - Enable `PID_AUTOTUNE_MENU`
    - Set `DEFAULT_Kp`, `DEFAULT_Ki` and `DEFAULT_Kd` to recent PID tune values to save repeating when flashed
    - Enable `PIDTEMPBED`
    - Set `DEFAULT_bedKp`, `DEFAULT_bedKi` and `DEFAULT_bedKd` to recent PID bed tune values to save repeating when flashed
-   - Set `EXTRUDE_MINTEMP` to '180'
+   - Set `EXTRUDE_MINTEMP` to '180' as 170 seems too low
    - Set `EXTRUDE_MAXLENGTH` to '600'
+   - Disable `USE_ZMIN_PLUG` as using BL-Touch and Z endstop not fitted
    - Set X, Y, Z and E0 driver types to 'TMC2209'
    - Set `DEFAULT_AXIS_STEPS_PER_UNIT` to recent calibration values to save repating when flashed
    - Set `DEFAULT_MAX_FEEDRATE`, `DEFAULT_MAX_ACCELERATION`, `DEFAULT_ACCELERATION`, `DEFAULT_RETRACT_ACCELERATION`, `DEFAULT_TRAVEL_ACCELERATION`, `JUNCTION_DEVIATION_MM` to more suitable values
-   - Disable `JD_HANDLE_SMALL_SEGMENTS` - ***going to re-enable as this caused stuttering some months back and may now be fixed***
    - Enable `S_CURVE_ACCELERATION`
+   - Disable `Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN` Z endstop not fitted
+   - Enable `USE_PROBE_FOR_Z_HOMING` for some reason needs this to force using the BL-Touch on Z homing
    - Enable `BLTOUCH`
    - Set `NOZZLE_TO_PROBE_OFFSET` to correct values of BL-Touch installed
+   - Set `PROBING_MARGIN 0`
    - Set `XY_PROBE_FEEDRATE (166*60)`
    - Set `Z_PROBE_FEEDRATE_FAST (10*60)`
    - Set `MULTIPLE_PROBING 2`
@@ -54,18 +65,21 @@
    - Set `Z_CLEARANCE_MULTI_PROBE 4`
    - Enable `Z_AFTER_PROBING`
    - Enable `Z_MIN_PROBE_REPEATABILITY_TEST`
+   - Set `PROBING_BED_TEMP 60`
    - Set `INVERT_X_DIR true` and `INVERT_E0_DIR true` - correct for Ender 3 Pro
    - Set `Z_AFTER_HOMING 20 ` - leaves more room to see between nozzle and bed
    - Set `X_BED_SIZE 235` and `Y_BED_SIZE 235` - correct for Ender 3 Pro
    - Set `X_MAX_POS (X_BED_SIZE+15)` - allows for bed level probing further out
    - Set `Z_MAX_POS 250` - correct for Ender 3 Pro
    - Enable `FILAMENT_RUNOUT_SENSOR`
-   - Set `FIL_RUNOUT_PIN PC12` - port labelled PT-DET which has extra pin for motion detection
    - Set `FILAMENT_RUNOUT_SENSOR_DEBUG` - useful for seeing distance info in terminal output
    - Set `FILAMENT_RUNOUT_DISTANCE_MM 25` - BTT recommended 7mm is too short causing false alarms
    - Enable `FILAMENT_MOTION_SENSOR`
    - Enable `AUTO_BED_LEVELING_BILINEAR`
    - Enable `RESTORE_LEVELING_AFTER_G28`
+   - Enable `PREHEAT_BEFORE_LEVELING`
+   - Set `LEVELING_NOZZLE_TEMP 0` never gets close to bed so no need to heat it up
+   - Set `LEVELING_BED_TEMP 60` make sure bed is heated to average temp when printing
    - Enable `DEBUG_LEVELING_FEATURE` - as we have the RAM this is useful
    - Enable `G26_MESH_VALIDATION` - must test this
    - Set `GRID_MAX_POINTS_X 5` - 5 x 5 grid is more accurate
@@ -77,20 +91,21 @@
    - Set `LEVEL_CORNERS_HEIGHT 0.1` - ***need to find out why this was recommended***
    - Enable `LEVEL_CENTER_TOO`
    - Enable `Z_SAFE_HOMING`
-   - Set `HOMING_FEEDRATE_Z (10*60)`
+   - Set `HOMING_FEEDRATE_MM_M { (50*60), (50*60), (10*60) }` increased Z speed
    - Enable `EEPROM_SETTINGS`
-   - Customised `Preheat Constants` to personal preferences
+   - Customised `Preheat Constants` to personal preferences, replaced ABS with PETG
    - Enable `NOZZLE_PARK_FEATURE`
    - Enable `PRINTCOUNTER`
+   - Set `PRINTCOUNTER_SAVE_INTERVAL 10`
    - Set `DISPLAY_CHARSET_HD44780 WESTERN`
    - Enable `SDSUPPORT`
    - Enable `SD_CHECK_AND_RETRY`
    - Enable `INDIVIDUAL_AXIS_HOMING_MENU`
+   - Enable `INDIVIDUAL_AXIS_HOMING_SUBMENU`
    - Enable `CR10_STOCKDISPLAY`
    - Enable `FAN_SOFT_PWM`
    - Enable `NEOPIXEL_LED`
    - Set `NEOPIXEL_TYPE NEO_GRB` - specfic to the LEDs I used
-   - Set `NEOPIXEL_PIN PC7` - correct port for BTT SKR Mini E3 v1.2
    - Set `NEOPIXEL_PIXELS 7` - I have 7 LED strip connected
    - Set `NEOPIXEL_BRIGHTNESS 255`
    - Enable `NEOPIXEL_STARTUP_TEST`
