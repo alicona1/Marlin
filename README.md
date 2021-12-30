@@ -10,6 +10,13 @@
 ## Software for builds
  - Visual Studio Code + PlatformIO + Auto Marlin Builder
  - Github Desktop for Windows
+## Fix for not flashing new firmware on new board (August stock firmware)
+When my v3 board arrived then fitted the board work fine, but when it came time to upgrade the firmware, for some reason no amount things I tried with the same SD card I was already using with the v1.2 would flash. The printer simply started normally igoring the new firmware - I tried both my own custom firmware and the newer stock versions from BTT. This is what I did to fix the problem:
+- Get the stock version of the latest firmware from BTT
+- Using an SD card 4GB or lower, format it to `FAT` not `FAT32`
+- Copy the new firmware to the SD card
+- Flash the firmware
+This then worked for me and I then tried the same with my custom firmware and it to flashed fine. Afterwards I was even able to format the card back to `FAT32` and it was still able to read from it.
 ## Marlin Configurations (work in progress)
  - `platformio.ini`
    - default environment: `STM32G0B1RE_btt`
