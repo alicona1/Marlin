@@ -2,14 +2,14 @@
 ## Printer Hardware
  - Ender 3 Pro
  - BTT SKR Mini E3 v3
- - BTT TFT35 V3
- - BTT Smart Filament Runout Sensor
+ <!-- - BTT TFT35 V3 -->
+ <!-- - BTT Smart Filament Runout Sensor -->
  - Creality BL-Touch v3.1
- - NeoPixel LEDs x 7
- - Raspberry Pi4 + OctoPrint + Night-light Pi-Cam
+ <!-- - NeoPixel LEDs x 7 -->
+ - Raspberry Pi3 + OctoPrint
 ## Software for builds
  - Visual Studio Code + PlatformIO + Auto Marlin Builder
- - Github Desktop for Windows
+
 ## Fix for not flashing new firmware on new board (August stock firmware)
 When my v3 board arrived then fitted the board work fine, but when it came time to upgrade the firmware, for some reason no amount things I tried with the same SD card I was already using with the v1.2 would flash. The printer simply started normally igoring the new firmware - I tried both my own custom firmware and the newer stock versions from BTT. This is what I did to fix the problem:
 - Get the stock version of the latest firmware from BTT
@@ -53,7 +53,7 @@ This then worked for me and I then tried the same with my custom firmware and it
    - Enable `PIDTEMPBED`
    - Set `DEFAULT_bedKp`, `DEFAULT_bedKi` and `DEFAULT_bedKd` to recent PID bed tune values to save repeating when flashed
    - Set `EXTRUDE_MINTEMP` to '180' as 170 seems too low
-   - Set `EXTRUDE_MAXLENGTH` to '600'
+   - Set `EXTRUDE_MAXLENGTH` to '375'
    - Disable `USE_ZMIN_PLUG` as using BL-Touch and Z endstop not fitted
    - Set X, Y, Z and E0 driver types to 'TMC2209'
    - Set `DEFAULT_AXIS_STEPS_PER_UNIT` to recent calibration values to save repating when flashed
@@ -78,7 +78,7 @@ This then worked for me and I then tried the same with my custom firmware and it
    - Set `X_BED_SIZE 235` and `Y_BED_SIZE 235` - correct for Ender 3 Pro
    - Set `X_MAX_POS (X_BED_SIZE+15)` - allows for bed level probing further out
    - Set `Z_MAX_POS 250` - correct for Ender 3 Pro
-   - Enable `FILAMENT_RUNOUT_SENSOR`
+   - Enable `FILAMENT_RUNOUT_SENSOR` but set to off
    - Set `FILAMENT_RUNOUT_SENSOR_DEBUG` - useful for seeing distance info in terminal output
    - Set `FILAMENT_RUNOUT_DISTANCE_MM 25` - BTT recommended 7mm is too short causing false alarms
    - Enable `FILAMENT_MOTION_SENSOR`
@@ -189,11 +189,11 @@ This then worked for me and I then tried the same with my custom firmware and it
    - Enable `SERIAL_FLOAT_PRECISION`
    - Enable `ADVANCED_PAUSE_FEATURE`
    - Set `FILAMENT_CHANGE_UNLOAD_FEEDRATE 100`
-   - Set `FILAMENT_CHANGE_UNLOAD_LENGTH 600`
+   - Set `FILAMENT_CHANGE_UNLOAD_LENGTH 375`
    - Set `FILAMENT_CHANGE_SLOW_LOAD_FEEDRATE 10`
    - Set `FILAMENT_CHANGE_SLOW_LOAD_LENGTH 25`
    - Set `FILAMENT_CHANGE_FAST_LOAD_FEEDRATE 10`
-   - Set `FILAMENT_CHANGE_FAST_LOAD_LENGTH 300`
+   - Set `FILAMENT_CHANGE_FAST_LOAD_LENGTH 375`
    - Set `ADVANCED_PAUSE_CONTINUOUS_PURGE`
    - Enable `PARK_HEAD_ON_PAUSE`
    - Enable `FILAMENT_LOAD_UNLOAD_GCODES`
